@@ -1,12 +1,14 @@
 package ejercicio_preexamen;
 
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Scanner;
+
 
 class Pedido {
     private Map<Plato, Integer> platos;
@@ -16,7 +18,12 @@ class Pedido {
     }
 
     public void agregarPlato(Plato plato, int cantidad) {
-        platos.put(plato, cantidad);
+        if (platos.containsKey(plato)) {
+            int cantidadExistente = platos.get(plato);
+            platos.put(plato, cantidadExistente + cantidad);
+        } else {
+            platos.put(plato, cantidad);
+        }
     }
 
     public List<Plato> getPlatos() {
@@ -78,28 +85,41 @@ class Pedido {
     }
 
     private void generarDocumentoTexto(double subtotal, double descuento, double total) {
-        try (PrintWriter writer = new PrintWriter(new FileWriter("pedido.txt"))) {
-            writer.println("Detalles del pedido:");
-            writer.println("---------------------");
-
-            for (Plato plato : platos.keySet()) {
-                int cantidad = platos.get(plato);
-                double precio = plato.getPrecio()
-                        + (plato instanceof PlatoPrincipal ? ((PlatoPrincipal) plato).getRecargo() : 0);
-                double subtotalPlato = precio * cantidad;
-                writer.println("- " + plato.getNombre() + " x " + cantidad + " = " + subtotalPlato + "€");
+        File archivo = new File("pedido.txt");
+        try {
+            if (archivo.createNewFile()) {
+                System.out.println("Se ha creado el archivo " + archivo.getName());
+            } else {
+                System.out.println("El archivo ya existe");
             }
+        } catch (IOException e) {
+            System.out.println("Error al crear el archivo");
+        }
+        try {
+            FileWriter escribir_precios = new FileWriter(archivo, true);
 
-            writer.println("---------------------");
-            writer.println("Subtotal: " + subtotal + "€");
-            writer.println("Descuento: " + descuento + "€");
-            writer.println("Total a pagar: " + total + "€");
-
-            System.out.println("Documento generado exitosamente.");
+            escribir_precios.write("Subtotal: " + subtotal + "€\n");
+            escribir_precios.write("Descuento: " + descuento + "€\n");
+            escribir_precios.write("Total a pagar: " + total + "€\n");
+            escribir_precios.close();
 
         } catch (IOException e) {
-            System.out.println("Error al generar el documento: " + e.getMessage());
+            System.out.println("Error al escribir el archivo");
+            e.printStackTrace();
+        }
+
+        try {
+            Scanner lector_pedido = new Scanner(archivo);
+            while (lector_pedido.hasNextLine()) {
+                String linea = lector_pedido.nextLine();
+                System.out.println(linea);
+            }
+            lector_pedido.close();
+
+        } catch (IOException e) {
+            System.out.println("Error al leer el archivo");
+            e.printStackTrace();
+
         }
     }
-
 }

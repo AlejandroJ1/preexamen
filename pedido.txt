@@ -1,12 +1,3 @@
-Detalles del pedido:
----------------------
-- Ensaladilla Rusa x 1 = 4.5€
-- Croquetas x 1 = 5.5€
-- Pure x 1 = 4.5€
-- Sopa x 1 = 4.5€
-- Filetes empanados x 1 = 5.5€
-- Tortilla de patata x 3 = 16.5€
----------------------
-Subtotal: 41.0€
-Descuento: 3.0€
-Total a pagar: 38.0€
+Subtotal: 19.0€
+Descuento: 1.0€
+Total a pagar: 18.0€
