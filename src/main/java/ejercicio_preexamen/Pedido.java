@@ -98,6 +98,8 @@ class Pedido {
         try {
             FileWriter escribir_precios = new FileWriter(archivo, true);
 
+            escribir_precios.write("Factura del pedido\n");
+            escribir_precios.write("-------------------\n");
             escribir_precios.write("Subtotal: " + subtotal + "€\n");
             escribir_precios.write("Descuento: " + descuento + "€\n");
             escribir_precios.write("Total a pagar: " + total + "€\n");

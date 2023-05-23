@@ -1,3 +1,5 @@
-Subtotal: 19.0€
-Descuento: 1.0€
-Total a pagar: 18.0€
+Factura del pedido
+-------------------
+Subtotal: 29.0€
+Descuento: 2.0€
+Total a pagar: 27.0€
